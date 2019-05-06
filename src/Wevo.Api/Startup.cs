@@ -19,8 +19,11 @@ namespace Wevo.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddSingleton(Configuration);
             IoCConfig.Initialize(services);
+
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -37,6 +40,7 @@ namespace Wevo.Api
                 app.UseHsts();
             }
 
+            app.UseCors(option => option.AllowAnyOrigin());
             app.UseHttpsRedirection();
             app.UseMvc();
         }
