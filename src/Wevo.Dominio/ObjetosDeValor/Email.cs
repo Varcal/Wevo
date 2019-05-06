@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Text.RegularExpressions;
-using Wevo.Dominio.Entidades.Base;
+using Wevo.NucleoCompartilhado.Base;
+using Wevo.NucleoCompartilhado.DomainEvents.Core;
+using Wevo.NucleoCompartilhado.DomainEvents.Notifications;
 
 namespace Wevo.Dominio.ObjetosDeValor
 {
@@ -14,8 +15,11 @@ namespace Wevo.Dominio.ObjetosDeValor
 
         public Email(string endereco)
         {
-            if(!EstaValido(endereco))
-                throw new ApplicationException("Endereço de e-mail inválido");
+            if (!EstaValido(endereco))
+            {
+                DomainEvent.RaiseEvent(new DomainNotification("EmailInvalido", "Endereço de e-mail inválido"));
+                return;
+            }
 
             Endereco = endereco;
         }

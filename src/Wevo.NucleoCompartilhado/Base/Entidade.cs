@@ -1,4 +1,4 @@
-﻿namespace Wevo.Dominio.Entidades.Base
+﻿namespace Wevo.NucleoCompartilhado.Base
 {
     public abstract class Entidade
     {

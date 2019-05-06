@@ -1,5 +1,5 @@
 ﻿using System;
-using Wevo.Dominio.Entidades.Base;
+using Wevo.NucleoCompartilhado.Base;
 
 namespace Wevo.Dominio.ObjetosDeValor
 {

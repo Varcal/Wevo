@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using Wevo.Dominio.Entidades.Base;
+using Wevo.NucleoCompartilhado.Base;
+using Wevo.NucleoCompartilhado.DomainEvents.Core;
+using Wevo.NucleoCompartilhado.DomainEvents.Notifications;
 
 namespace Wevo.Dominio.ObjetosDeValor
 {
@@ -12,6 +14,12 @@ namespace Wevo.Dominio.ObjetosDeValor
 
         public Telefone(string numero)
         {
+            if (!EstaValido(numero))
+            {
+                DomainEvent.RaiseEvent(new DomainNotification("TelefoneInvalido", "Número de telefone inválido"));
+                return;
+            }
+
             Numero = numero;
         }
 

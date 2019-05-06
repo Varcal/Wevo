@@ -1,8 +1,8 @@
 ﻿using System;
 using Wevo.Dominio.Commands;
-using Wevo.Dominio.Entidades.Base;
 using Wevo.Dominio.Enums;
 using Wevo.Dominio.ObjetosDeValor;
+using Wevo.NucleoCompartilhado.Base;
 
 namespace Wevo.Dominio.Entidades
 {

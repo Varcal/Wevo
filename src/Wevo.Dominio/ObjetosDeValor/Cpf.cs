@@ -1,6 +1,8 @@
 ﻿
 using System;
-using Wevo.Dominio.Entidades.Base;
+using Wevo.NucleoCompartilhado.Base;
+using Wevo.NucleoCompartilhado.DomainEvents.Core;
+using Wevo.NucleoCompartilhado.DomainEvents.Notifications;
 
 namespace Wevo.Dominio.ObjetosDeValor
 {
@@ -13,8 +15,11 @@ namespace Wevo.Dominio.ObjetosDeValor
 
         public Cpf(string numero)
         {
-            if(!Validar(numero))
-                throw new ApplicationException("CPF inválido"); 
+            if (!Validar(numero))
+            {
+                DomainEvent.RaiseEvent(new DomainNotification("CpfInvalido", "CPF informado não é válido"));
+                return;
+            }
 
             Numero = numero;
         }
