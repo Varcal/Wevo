@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Wevo.NucleoCompartilhado.Base;
 using Wevo.NucleoCompartilhado.DomainEvents.Core;
 using Wevo.NucleoCompartilhado.DomainEvents.Notifications;

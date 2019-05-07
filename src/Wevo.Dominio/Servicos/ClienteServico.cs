@@ -8,22 +8,21 @@ using Wevo.Dominio.Entidades;
 
 namespace Wevo.Dominio.Servicos
 {
-    public sealed class ClienteServico: IClienteServico
+    public sealed class ClienteServico:ServicoBase, IClienteServico
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IClienteRepositorio _clienteRepositorio;
 
-        public ClienteServico(IUnitOfWork unitOfWork, IClienteRepositorio clienteRepositorio)
+        public ClienteServico(IUnitOfWork unitOfWork,IClienteRepositorio clienteRepositorio)
+            :base(unitOfWork)
         {
-            _unitOfWork = unitOfWork;
             _clienteRepositorio = clienteRepositorio;
         }
 
         public void Registrar(ClienteRegistrar clienteRegistrar)
         {
-            var cliente = Cliente.CriarClienteParaRegistro(clienteRegistrar);
+            var cliente = new Cliente(clienteRegistrar);
             _clienteRepositorio.Inserir(cliente);
-            _unitOfWork.Save();
+            Save();
         }
 
         public void Alterar(ClienteAlterar clienteAlterar)
@@ -32,14 +31,14 @@ namespace Wevo.Dominio.Servicos
             cliente.Alterar(clienteAlterar);
 
             _clienteRepositorio.Alterar(cliente);
-            _unitOfWork.Save();
+            Save();
         }
 
         public void Excluir(int clienteId)
         {
             var cliente = _clienteRepositorio.ObterPorId(clienteId);
             _clienteRepositorio.Excluir(cliente);
-            _unitOfWork.Save();
+            Save();
         }
 
         public IReadOnlyCollection<Cliente> SelecionarTodos(int indice, int quantidade)

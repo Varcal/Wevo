@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Wevo.Dominio\Wevo.Dominio.csproj" />
     <ProjectReference Include="..\Wevo.IoC\Wevo.IoC.csproj" />
+    <ProjectReference Include="..\Wevo.NucleoCompartilhado\Wevo.NucleoCompartilhado.csproj" />
   </ItemGroup>
 
 </Project>

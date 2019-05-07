@@ -6,6 +6,7 @@ using Wevo.Dominio.Contratos.Repositorios;
 using Wevo.Dominio.Contratos.Servicos;
 using Wevo.Dominio.Contratos.Transacoes;
 using Wevo.Dominio.Servicos;
+using Wevo.NucleoCompartilhado.DomainEvents.Notifications;
 
 namespace Wevo.IoC
 {
@@ -13,6 +14,7 @@ namespace Wevo.IoC
     {
         public static void Initialize(IServiceCollection services)
         {
+            services.AddScoped<IDomainNotificationHandler, DomainNotificationHandler>();
             services.AddScoped<IClienteServico, ClienteServico>();
             services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

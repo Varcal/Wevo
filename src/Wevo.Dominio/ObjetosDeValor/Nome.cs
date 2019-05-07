@@ -1,5 +1,6 @@
-﻿using System;
-using Wevo.NucleoCompartilhado.Base;
+﻿using Wevo.NucleoCompartilhado.Base;
+using Wevo.NucleoCompartilhado.DomainEvents.Core;
+using Wevo.NucleoCompartilhado.DomainEvents.Notifications;
 
 namespace Wevo.Dominio.ObjetosDeValor
 {
@@ -11,8 +12,12 @@ namespace Wevo.Dominio.ObjetosDeValor
 
         public Nome(string texto)
         {
-            if(texto.Length > 100)
-                throw new ApplicationException(@"Nome deve conter no máximo 100 caracteres.");
+            if (string.IsNullOrEmpty(texto))
+            {
+                DomainEvent.RaiseEvent(new DomainNotification("NomeInvalido", "Nome é obrigatório"));
+                return;
+            }
+                
 
             Texto = texto;
         }

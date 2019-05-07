@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Wevo.IoC;
+using Wevo.NucleoCompartilhado.DomainEvents.Core;
 
 namespace Wevo.Api
 {
@@ -22,9 +23,10 @@ namespace Wevo.Api
 
             services.AddSingleton(Configuration);
             IoCConfig.Initialize(services);
-
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            DomainEvent.ServiceProvider = services.BuildServiceProvider();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

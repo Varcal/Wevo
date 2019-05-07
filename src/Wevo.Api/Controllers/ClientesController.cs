@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Wevo.Api.Models;
 using Wevo.Dominio.Commands;
 using Wevo.Dominio.Contratos.Servicos;
+using Wevo.NucleoCompartilhado.DomainEvents.Core;
+using Wevo.NucleoCompartilhado.DomainEvents.Notifications;
 
 namespace Wevo.Api.Controllers
 {
@@ -11,10 +13,12 @@ namespace Wevo.Api.Controllers
     public class ClientesController : ControllerBase
     {
         private readonly IClienteServico _clienteServico;
+        private readonly IDomainNotificationHandler _domainNotificationHandler;
 
         public ClientesController(IClienteServico clienteServico)
         {
             _clienteServico = clienteServico;
+            _domainNotificationHandler = (IDomainNotificationHandler)DomainEvent.ServiceProvider.GetService(typeof(IDomainNotificationHandler));
         }
 
 
@@ -31,21 +35,23 @@ namespace Wevo.Api.Controllers
         public IActionResult Get(int id)
         {
             var cliente = _clienteServico.ObterPorId(id);
-
+           
             if (cliente == null) return NoContent();
- 
-            return Ok(cliente);
+
+            var model = new ClienteModel(cliente);
+            return Ok(model);
         }
 
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody] ClienteRegistrar model)
         {
+            
             _clienteServico.Registrar(model);
 
-            //if (notifications.Any()) return NotFound(new List<string>());
+            if (_domainNotificationHandler.HasNotification()) return NotFound(_domainNotificationHandler.GetNotifications());
 
-            return Created("", @"Registrado com sucesso");
+            return Created("", "Registrado com sucesso");
         }
         
         // PUT api/values/5
@@ -53,7 +59,8 @@ namespace Wevo.Api.Controllers
         public IActionResult Put(int id, [FromBody] ClienteAlterar model)
         {
             _clienteServico.Alterar(model);
-            //if (notifications.Any()) return NotFound(new List<string>());
+
+            if (_domainNotificationHandler.HasNotification()) return NotFound(_domainNotificationHandler.GetNotifications());
 
             return Ok("Alterado com sucesso");
         }
@@ -64,7 +71,7 @@ namespace Wevo.Api.Controllers
         {
             _clienteServico.Excluir(id);
 
-            //if (notifications.Any()) return NotFound(new List<string>());
+            if (_domainNotificationHandler.HasNotification()) return NotFound(_domainNotificationHandler.GetNotifications());
 
             return Ok("Excluído com sucesso");
         }

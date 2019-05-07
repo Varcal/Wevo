@@ -30,9 +30,9 @@ namespace Wevo.Dominio.ObjetosDeValor
 
         private bool EstaValido(string numero)
         {
-            var regex = @"^\([1-9]{2}\) [9]{0,1}[6-9]{1}[0-9]{3}\-[0-9]{4}$";
-
-            return Regex.IsMatch(numero, regex);
+            var regexTelefone = @"^[0-9]{10}$";
+            var regexCelular = @"^[0-9]{11}$";
+            return Regex.IsMatch(numero, regexTelefone) || Regex.IsMatch(numero, regexCelular);
         }
     }
 }
