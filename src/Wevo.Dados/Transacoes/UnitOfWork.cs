@@ -38,20 +38,19 @@ namespace Wevo.Dados.Transacoes
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; 
+        private bool _disposedValue; 
 
         void Dispose(bool disposing)
         {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    _transaction?.Dispose();
-                    _db?.Dispose();
-                }
+            if (_disposedValue) return;
 
-                disposedValue = true;
+            if (disposing)
+            {
+                _transaction?.Dispose();
+                _db?.Dispose();
             }
+
+            _disposedValue = true;
         }
 
         

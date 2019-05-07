@@ -19,7 +19,7 @@ namespace Wevo.NucleoCompartilhado.DomainEvents.Notifications
 
         public void Dispose()
         {
-            _notifications = null;
+            _notifications = new List<DomainNotification>();
         }
 
         public bool HasNotification()

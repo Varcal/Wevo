@@ -16,12 +16,10 @@ namespace Wevo.IoC
         public static void Initialize(IServiceCollection services)
         {
             services.AddDbContext<EfContext>();
-            services.AddDbContext<InMemoryContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IDomainNotificationHandler, DomainNotificationHandler>();
             services.AddScoped<IClienteServico, ClienteServico>();
-            services.AddScoped<IClienteRepositorio, ClienteRepositoryInMemory>();
             services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
             DomainEvent.ServiceProvider = services.BuildServiceProvider();
         }

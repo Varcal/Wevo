@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Wevo.Api.Models;
 using Wevo.Dominio.Commands;
@@ -10,7 +11,7 @@ namespace Wevo.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientesController : ControllerBase
+    public class ClientesController : ControllerBase, IDisposable
     {
         private readonly IClienteServico _clienteServico;
         private readonly IDomainNotificationHandler _domainNotificationHandler;
@@ -74,6 +75,11 @@ namespace Wevo.Api.Controllers
             if (_domainNotificationHandler.HasNotification()) return NotFound(_domainNotificationHandler.GetNotifications());
 
             return Ok("Excluído com sucesso");
+        }
+
+        public void Dispose()
+        {
+            _domainNotificationHandler?.Dispose();
         }
     }
 }
