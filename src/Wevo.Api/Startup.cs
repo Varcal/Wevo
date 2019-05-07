@@ -23,9 +23,10 @@ namespace Wevo.Api
 
             services.AddSingleton(Configuration);
             IoCConfig.Initialize(services);
+
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            DomainEvent.ServiceProvider = services.BuildServiceProvider();
+            
 
         }
 

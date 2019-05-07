@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Storage;
 using Wevo.Dados.Contextos;
 using Wevo.Dominio.Contratos.Transacoes;
 
@@ -24,6 +25,8 @@ namespace Wevo.Dados.Transacoes
             _transaction.Commit();
         }
 
+        
+
         public void Rollback()
         {
             _transaction.Rollback();
@@ -33,5 +36,32 @@ namespace Wevo.Dados.Transacoes
         {
             _db.SaveChanges();
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; 
+
+        void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _transaction?.Dispose();
+                    _db?.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
+
+
     }
 }

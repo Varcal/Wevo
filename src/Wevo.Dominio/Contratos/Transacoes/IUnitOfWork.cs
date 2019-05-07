@@ -1,6 +1,8 @@
-﻿namespace Wevo.Dominio.Contratos.Transacoes
+﻿using System;
+
+namespace Wevo.Dominio.Contratos.Transacoes
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork: IDisposable
     {
         void BeginTransaction();
         void Commit();
